@@ -10,7 +10,7 @@ steps:
       - make bootstrap test goviz build acceptance
 
   release:
-    image: alpine:3.7
+    image: golang:1.10
     description: Upload binaries, build and push Docker image...
     commands:
       - make release
