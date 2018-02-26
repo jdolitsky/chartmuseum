@@ -12,4 +12,4 @@ steps:
       - echo $DOCKERHUB_CONFIG | base64 --decode --ignore-garbage > ~/.docker/config.json
       - ln -s /codefresh/volume/${{CF_REPO_NAME}} chartmuseum && cd chartmuseum
       - make bootstrap testcloud goviz build acceptance
-      - if [ "${{CF_BRANCH}}" == master ]; then make release; fi
+      - if [ ${{CF_BRANCH}} = master ]; then make release; fi
