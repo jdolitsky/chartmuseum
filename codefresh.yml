@@ -1,20 +1,13 @@
 version: '1.0'
 steps:
-
-  build_test:
+  setup_build_test_release:
     image: golang:1.10
-    description: Run unit tests, build binaries, run acceptance tests...
+    description: Setup env, unit test, build, acceptance test, release artifacts...
     working_directory: /go/src/github.com/kubernetes-helm
     commands:
+      - echo $GCLOUD_SERVICE_KEY | base64 --decode --ignore-garbage > ~/gcp-key.json
+      - mkdir -p ~/.docker
+      - echo $DOCKERHUB_CONFIG | base64 --decode --ignore-garbage > ~/.docker/config.json
       - ln -s /codefresh/volume/${{CF_REPO_NAME}} chartmuseum && cd chartmuseum
-      - make bootstrap test goviz build acceptance
-
-  release:
-    image: golang:1.10
-    description: Upload binaries, build and push Docker image...
-    commands:
-      - make release
-    when:
-      branch:
-        only:
-          - codefresh
+      - make bootstrap testcloud goviz build acceptance
+      - [ ${{CF_BRANCH}} != master ] || make release
