@@ -1,21 +1,20 @@
 version: '1.0'
 steps:
 
-  build_test_binaries:
-    image: golang:1.8
+  build_test:
+    image: golang:1.10
+    description: Run unit tests, build binaries, run acceptance tests...
+    working_directory: /go/src/github.com/kubernetes-helm/chartmuseum
     commands:
-     - mkdir -p /go/src/github.com/kubernetes-helm
-     - >-
-       ln -s /codefresh/volume/${{CF_REPO_NAME}}
-       /go/src/github.com/kubernetes-helm/chartmuseum
-     - cd /go/src/github.com/kubernetes-helm/chartmuseum
-     - make bootstrap
-     - make test
-     - make goviz
-     - make build
-     - make acceptance
+      - ln -s /codefresh/volume/${{CF_REPO_NAME}} .
+      - make bootstrap test goviz build acceptance
 
-  build_docker_image:
-    type: build
-    image_name: ${{CF_REPO_NAME}}
-    tag: ${{CF_SHORT_REVISION}}
+  release:
+    image: alpine:3.7
+    description: Upload binaries, build and push Docker image...
+    commands:
+      - make release
+    when:
+      branch:
+        only:
+          - codefresh
