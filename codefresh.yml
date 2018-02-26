@@ -4,6 +4,8 @@ steps:
     image: golang:1.10
     description: Setup env, unit test, build, acceptance test, release artifacts...
     working_directory: /go/src/github.com/kubernetes-helm
+    environment:
+      - GOOGLE_APPLICATION_CREDENTIALS=/root/gcp-key.json
     commands:
       - echo $GCLOUD_SERVICE_KEY | base64 --decode --ignore-garbage > ~/gcp-key.json
       - mkdir -p ~/.docker
