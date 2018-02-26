@@ -1,7 +1,7 @@
 # ChartMuseum
 <img align="right" src="https://github.com/kubernetes-helm/chartmuseum/raw/master/logo.png">
 
-[![CircleCI](https://circleci.com/gh/kubernetes-helm/chartmuseum.svg?style=svg)](https://circleci.com/gh/kubernetes-helm/chartmuseum)
+[![Codefresh build status]( https://g.codefresh.io/api/badges/build?repoOwner=jdolitsky&repoName=chartmuseum&branch=master&pipelineName=chartmuseum&accountName=kubernetes-helm&type=cf-2)]( https://g.codefresh.io/repositories/jdolitsky/chartmuseum/builds?filter=trigger:build;branch:master;service:5a941fb9ecda440001293c85~chartmuseum)
 [![Go Report Card](https://goreportcard.com/badge/github.com/kubernetes-helm/chartmuseum)](https://goreportcard.com/report/github.com/kubernetes-helm/chartmuseum)
 [![GoDoc](https://godoc.org/github.com/kubernetes-helm/chartmuseum?status.svg)](https://godoc.org/github.com/kubernetes-helm/chartmuseum)
 <sub>**_"Preserve your precious artifacts... in the cloud!"_**<sub>

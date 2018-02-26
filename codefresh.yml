@@ -1,0 +1,21 @@
+version: '1.0'
+steps:
+
+  build_test_binaries:
+    image: golang:1.8
+    commands:
+     - mkdir -p /go/src/github.com/kubernetes-helm
+     - >-
+       ln -s /codefresh/volume/${{CF_REPO_NAME}}
+       /go/src/github.com/kubernetes-helm/chartmuseum
+     - cd /go/src/github.com/kubernetes-helm/chartmuseum
+     - make bootstrap
+     - make test
+     - make goviz
+     - make build
+     - make acceptance
+
+  build_docker_image:
+    type: build
+    image_name: ${{CF_REPO_NAME}}
+    tag: ${{CF_SHORT_REVISION}}
