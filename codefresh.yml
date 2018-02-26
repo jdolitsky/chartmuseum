@@ -4,9 +4,9 @@ steps:
   build_test:
     image: golang:1.10
     description: Run unit tests, build binaries, run acceptance tests...
-    working_directory: /go/src/github.com/kubernetes-helm/chartmuseum
+    working_directory: /go/src/github.com/kubernetes-helm
     commands:
-      - ln -s /codefresh/volume/${{CF_REPO_NAME}}/\{,.[^.]\}* .
+      - ln -s /codefresh/volume/${{CF_REPO_NAME}} chartmuseum && cd chartmuseum
       - make bootstrap test goviz build acceptance
 
   release:
