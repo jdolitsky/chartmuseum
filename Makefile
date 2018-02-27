@@ -107,3 +107,13 @@ ifndef HAS_AWS
 	@pip install awscli
 endif
 	@scripts/release.sh $(VERSION)
+
+.PHONY: archive
+archive:
+ifndef HAS_PIP
+	@apt-get update && apt-get install -y python-pip
+endif
+ifndef HAS_AWS
+	@pip install awscli
+endif
+	@scripts/archive.sh

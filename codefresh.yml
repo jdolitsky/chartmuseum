@@ -5,6 +5,7 @@ steps:
     description: Setup env, unit test, build, acceptance test, release artifacts...
     working_directory: /go/src/github.com/kubernetes-helm
     environment:
+      - ARCHIVE_AMAZON_PREFIX=builds/${{CF_BUILD_ID}}
       - GOOGLE_APPLICATION_CREDENTIALS=/root/gcp-key.json
     commands:
       - echo $GCLOUD_SERVICE_KEY | base64 --decode --ignore-garbage > ~/gcp-key.json
@@ -13,3 +14,5 @@ steps:
       - ln -s /codefresh/volume/${{CF_REPO_NAME}} chartmuseum && cd chartmuseum
       - make bootstrap testcloud goviz build acceptance
       - if [ ${{CF_BRANCH}} = master ]; then make release; fi
+    on_finish:
+      - make archive
