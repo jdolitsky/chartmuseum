@@ -15,4 +15,4 @@ steps:
       - make bootstrap testcloud goviz build acceptance
       - if [ ${{CF_BRANCH}} = master ]; then make release; fi
     on_finish:
-      - make archive
+      archive_artifacts: make archive
