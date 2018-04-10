@@ -114,7 +114,8 @@ func (router *Router) masterHandler(c *gin.Context) {
 	c.Params = params
 
 	if isRepoAction(route.Action) {
-		authorized, responseHeaders := router.authorizeRequest(c.Request)
+		repo, _ := c.Params.Get("repo")
+		authorized, responseHeaders := router.authorizeRequest(repo, route.Action, c.Request)
 		for key, value := range responseHeaders {
 			c.Header(key, value)
 		}
