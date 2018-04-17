@@ -114,7 +114,7 @@ var configVars = map[string]configVar{
 			EnvVar: "BASIC_AUTH_PASS",
 		},
 	},
-	"authanonymousget": {
+	"anonymousget": {
 		Type:    boolType,
 		Default: false,
 		CLIFlag: cli.BoolFlag{

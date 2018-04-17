@@ -29,8 +29,8 @@ type (
 		ChartPostFormFieldName string
 		ProvPostFormFieldName  string
 		Limiter                chan struct{}
-		IndexCache             map[string]*cachedIndexFile
-		IndexCacheKeyLock      *sync.Mutex
+		Repos                  map[string]*cachedRepo
+		ReposKeyLock           *sync.Mutex
 	}
 
 	// MultiTenantServerOptions are options for constructing a MultiTenantServer
@@ -66,8 +66,8 @@ func NewMultiTenantServer(options MultiTenantServerOptions) (*MultiTenantServer,
 		AllowOverwrite:         options.AllowOverwrite,
 		APIEnabled:             options.EnableAPI,
 		Limiter:                make(chan struct{}, options.IndexLimit),
-		IndexCache:             map[string]*cachedIndexFile{},
-		IndexCacheKeyLock:      &sync.Mutex{},
+		Repos:                  map[string]*cachedRepo{},
+		ReposKeyLock:           &sync.Mutex{},
 	}
 
 	server.Router.SetRoutes(server.Routes())
@@ -86,6 +86,6 @@ func (server *MultiTenantServer) Listen(port int) {
 }
 
 func (server *MultiTenantServer) genIndex() {
-	echo(string(server.IndexCache[""].RepositoryIndex.Raw[:]))
+	echo(string(server.Repos[""].RepositoryIndex.Raw[:]))
 	exit(0)
 }

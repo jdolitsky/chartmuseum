@@ -299,7 +299,7 @@ func (suite *MultiTenantServerTestSuite) TestRegenerateRepositoryIndex() {
 	log := server.Logger.ContextLoggingFn(&gin.Context{})
 
 	objects, err := server.fetchChartsInStorage(log, "")
-	diff := storage.GetObjectSliceDiff(server.IndexCache[""].StorageCache, objects)
+	diff := storage.GetObjectSliceDiff(server.Repos[""].StorageCache, objects)
 	_, err = server.regenerateRepositoryIndexWorker(log, "", diff, objects)
 	suite.Nil(err, "no error regenerating repo index")
 
@@ -308,7 +308,7 @@ func (suite *MultiTenantServerTestSuite) TestRegenerateRepositoryIndex() {
 	suite.Nil(err, "no error changing modtime on temp file")
 
 	objects, err = server.fetchChartsInStorage(log, "")
-	diff = storage.GetObjectSliceDiff(server.IndexCache[""].StorageCache, objects)
+	diff = storage.GetObjectSliceDiff(server.Repos[""].StorageCache, objects)
 	_, err = server.regenerateRepositoryIndexWorker(log, "", diff, objects)
 	suite.Nil(err, "no error regenerating repo index with tarball updated")
 
@@ -317,21 +317,21 @@ func (suite *MultiTenantServerTestSuite) TestRegenerateRepositoryIndex() {
 	suite.Nil(err, "no error creating new broken tarball in temp dir")
 	defer destFile.Close()
 	objects, err = server.fetchChartsInStorage(log, "")
-	diff = storage.GetObjectSliceDiff(server.IndexCache[""].StorageCache, objects)
+	diff = storage.GetObjectSliceDiff(server.Repos[""].StorageCache, objects)
 	_, err = server.regenerateRepositoryIndexWorker(log, "", diff, objects)
 	suite.Nil(err, "error not returned with broken tarball added")
 
 	err = os.Chtimes(brokenTarballFilename, newtime, newtime)
 	suite.Nil(err, "no error changing modtime on broken tarball")
 	objects, err = server.fetchChartsInStorage(log, "")
-	diff = storage.GetObjectSliceDiff(server.IndexCache[""].StorageCache, objects)
+	diff = storage.GetObjectSliceDiff(server.Repos[""].StorageCache, objects)
 	_, err = server.regenerateRepositoryIndexWorker(log, "", diff, objects)
 	suite.Nil(err, "error not returned with broken tarball updated")
 
 	err = os.Remove(brokenTarballFilename)
 	suite.Nil(err, "no error removing broken tarball")
 	objects, err = server.fetchChartsInStorage(log, "")
-	diff = storage.GetObjectSliceDiff(server.IndexCache[""].StorageCache, objects)
+	diff = storage.GetObjectSliceDiff(server.Repos[""].StorageCache, objects)
 	_, err = server.regenerateRepositoryIndexWorker(log, "", diff, objects)
 	suite.Nil(err, "error not returned with broken tarball removed")
 }

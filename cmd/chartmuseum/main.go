@@ -59,7 +59,7 @@ func cliHandler(c *cli.Context) {
 		EnableAPI:              !conf.GetBool("disableapi"),
 		AllowOverwrite:         conf.GetBool("allowoverwrite"),
 		EnableMetrics:          !conf.GetBool("disablemetrics"),
-		AnonymousGet:           conf.GetBool("authanonymousget"),
+		AnonymousGet:           conf.GetBool("anonymousget"),
 		GenIndex:               conf.GetBool("genindex"),
 		IndexLimit:             conf.GetInt("indexlimit"),
 		Depth:                  conf.GetInt("depth"),

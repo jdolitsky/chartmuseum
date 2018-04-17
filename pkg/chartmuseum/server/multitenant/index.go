@@ -11,7 +11,7 @@ var (
 )
 
 func (server *MultiTenantServer) getIndexFile(log cm_logger.LoggingFn, repo string) (*cm_repo.Index, *HTTPError) {
-	server.initCachedIndexFile(log, repo)
+	server.initRepo(log, repo)
 
 	fo := <-server.getChartList(log, repo)
 
@@ -23,11 +23,11 @@ func (server *MultiTenantServer) getIndexFile(log cm_logger.LoggingFn, repo stri
 		return nil, &HTTPError{500, errStr}
 	}
 
-	diff := cm_storage.GetObjectSliceDiff(server.IndexCache[repo].StorageCache, fo.objects)
+	diff := cm_storage.GetObjectSliceDiff(server.Repos[repo].StorageCache, fo.objects)
 
 	// return fast if no changes
 	if !diff.Change {
-		return server.IndexCache[repo].RepositoryIndex, nil
+		return server.Repos[repo].RepositoryIndex, nil
 	}
 
 	ir := <-server.regenerateRepositoryIndex(log, repo, diff, fo.objects)

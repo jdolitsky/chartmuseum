@@ -31,7 +31,7 @@ import (
 )
 
 type (
-	cachedIndexFile struct {
+	cachedRepo struct {
 		RepositoryIndex         *cm_repo.Index
 		StorageCache            []cm_storage.Object
 		fetchedObjectsLock      *sync.Mutex
@@ -67,24 +67,24 @@ func (server *MultiTenantServer) primeCache() error {
 func (server *MultiTenantServer) getChartList(log cm_logger.LoggingFn, repo string) <-chan fetchedObjects {
 	ch := make(chan fetchedObjects, 1)
 
-	server.IndexCache[repo].fetchedObjectsLock.Lock()
-	server.IndexCache[repo].fetchedObjectsChans = append(server.IndexCache[repo].fetchedObjectsChans, ch)
+	server.Repos[repo].fetchedObjectsLock.Lock()
+	server.Repos[repo].fetchedObjectsChans = append(server.Repos[repo].fetchedObjectsChans, ch)
 
-	if len(server.IndexCache[repo].fetchedObjectsChans) == 1 {
+	if len(server.Repos[repo].fetchedObjectsChans) == 1 {
 		// this unlock is wanted, while fetching the list, allow other channeled requests to be added
-		server.IndexCache[repo].fetchedObjectsLock.Unlock()
+		server.Repos[repo].fetchedObjectsLock.Unlock()
 
 		objects, err := server.fetchChartsInStorage(log, repo)
 
-		server.IndexCache[repo].fetchedObjectsLock.Lock()
+		server.Repos[repo].fetchedObjectsLock.Lock()
 
 		// flush every other consumer that also wanted the index
-		for _, foCh := range server.IndexCache[repo].fetchedObjectsChans {
+		for _, foCh := range server.Repos[repo].fetchedObjectsChans {
 			foCh <- fetchedObjects{objects, err}
 		}
-		server.IndexCache[repo].fetchedObjectsChans = nil
+		server.Repos[repo].fetchedObjectsChans = nil
 	}
-	server.IndexCache[repo].fetchedObjectsLock.Unlock()
+	server.Repos[repo].fetchedObjectsLock.Unlock()
 
 	return ch
 }
@@ -92,21 +92,21 @@ func (server *MultiTenantServer) getChartList(log cm_logger.LoggingFn, repo stri
 func (server *MultiTenantServer) regenerateRepositoryIndex(log cm_logger.LoggingFn, repo string, diff cm_storage.ObjectSliceDiff, storageObjects []cm_storage.Object) <-chan indexRegeneration {
 	ch := make(chan indexRegeneration, 1)
 
-	server.IndexCache[repo].regenerationLock.Lock()
-	server.IndexCache[repo].regeneratedIndexesChans = append(server.IndexCache[repo].regeneratedIndexesChans, ch)
+	server.Repos[repo].regenerationLock.Lock()
+	server.Repos[repo].regeneratedIndexesChans = append(server.Repos[repo].regeneratedIndexesChans, ch)
 
-	if len(server.IndexCache[repo].regeneratedIndexesChans) == 1 {
-		server.IndexCache[repo].regenerationLock.Unlock()
+	if len(server.Repos[repo].regeneratedIndexesChans) == 1 {
+		server.Repos[repo].regenerationLock.Unlock()
 
 		index, err := server.regenerateRepositoryIndexWorker(log, repo, diff, storageObjects)
 
-		server.IndexCache[repo].regenerationLock.Lock()
-		for _, riCh := range server.IndexCache[repo].regeneratedIndexesChans {
+		server.Repos[repo].regenerationLock.Lock()
+		for _, riCh := range server.Repos[repo].regeneratedIndexesChans {
 			riCh <- indexRegeneration{index, err}
 		}
-		server.IndexCache[repo].regeneratedIndexesChans = nil
+		server.Repos[repo].regeneratedIndexesChans = nil
 	}
-	server.IndexCache[repo].regenerationLock.Unlock()
+	server.Repos[repo].regenerationLock.Unlock()
 
 	return ch
 }
@@ -116,9 +116,9 @@ func (server *MultiTenantServer) regenerateRepositoryIndexWorker(log cm_logger.L
 		"repo", repo,
 	)
 	index := &cm_repo.Index{
-		IndexFile: server.IndexCache[repo].RepositoryIndex.IndexFile,
-		Raw:       server.IndexCache[repo].RepositoryIndex.Raw,
-		ChartURL:  server.IndexCache[repo].RepositoryIndex.ChartURL,
+		IndexFile: server.Repos[repo].RepositoryIndex.IndexFile,
+		Raw:       server.Repos[repo].RepositoryIndex.Raw,
+		ChartURL:  server.Repos[repo].RepositoryIndex.ChartURL,
 	}
 
 	for _, object := range diff.Removed {
@@ -148,8 +148,8 @@ func (server *MultiTenantServer) regenerateRepositoryIndexWorker(log cm_logger.L
 
 	// It is very important that these two stay in sync as they reflect the same reality. StorageCache serves
 	// as object modification time cache, and RepositoryIndex is the canonical cached index.
-	server.IndexCache[repo].RepositoryIndex = index
-	server.IndexCache[repo].StorageCache = storageObjects
+	server.Repos[repo].RepositoryIndex = index
+	server.Repos[repo].StorageCache = storageObjects
 
 	log(cm_logger.DebugLevel, "index.yaml regenerated",
 		"repo", repo,
@@ -299,15 +299,15 @@ func (server *MultiTenantServer) checkInvalidChartPackageError(log cm_logger.Log
 	return err
 }
 
-func (server *MultiTenantServer) initCachedIndexFile(log cm_logger.LoggingFn, repo string) {
-	server.IndexCacheKeyLock.Lock()
-	defer server.IndexCacheKeyLock.Unlock()
-	if _, ok := server.IndexCache[repo]; !ok {
+func (server *MultiTenantServer) initRepo(log cm_logger.LoggingFn, repo string) {
+	server.ReposKeyLock.Lock()
+	defer server.ReposKeyLock.Unlock()
+	if _, ok := server.Repos[repo]; !ok {
 		var chartURL string
 		if server.ChartURL != "" {
 			chartURL = server.ChartURL + "/" + repo
 		}
-		server.IndexCache[repo] = &cachedIndexFile{
+		server.Repos[repo] = &cachedRepo{
 			RepositoryIndex:    cm_repo.NewIndex(chartURL),
 			StorageCache:       []cm_storage.Object{},
 			fetchedObjectsLock: &sync.Mutex{},
