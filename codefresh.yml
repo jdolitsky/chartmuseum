@@ -10,7 +10,7 @@ steps:
     title: Building testbed image
     type: build
     image_name: helm/chartmuseum-testbed
-    dockerfile: Dockerfile.test
+    dockerfile: chartmuseum/Dockerfile.test
   BuildPlatformBinaries:
     type: parallel
     stage: build
