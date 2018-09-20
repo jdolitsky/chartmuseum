@@ -1,7 +1,6 @@
 FROM golang:1.11.0
 RUN mkdir -p /go/src/github.com/helm
-WORKDIR /go/src/github.com/helm
-COPY . chartmuseum
+ADD chartmuseum /go/src/github.com/helm/chartmuseum
 WORKDIR /go/src/github.com/helm/chartmuseum
 RUN ls -la && \
     make bootstrap setup-test-environment
