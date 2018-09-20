@@ -5,6 +5,7 @@ stages:
   - test
 steps:
   BuildTestbedImage:
+    working_directory: /codefresh/volume/chartmuseum
     stage: bootstrap
     title: Building testbed image
     type: build
