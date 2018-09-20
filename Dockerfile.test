@@ -1,4 +1,4 @@
 FROM golang:1.11.0
-WORKDIR /go/src/github.com/helm
-COPY . chartmuseum
+WORKDIR /go/src/github.com/helm/chartmuseum
+COPY . .
 RUN make bootstrap setup-test-environment
