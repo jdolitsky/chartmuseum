@@ -1,0 +1,55 @@
+version: '1.0'
+stages:
+  - bootstrap
+  - build
+  - test
+steps:
+  BuildTestbedImage:
+    stage: bootstrap
+    title: Building testbed image
+    type: build
+    image_name: helm/chartmuseum-testbed
+    dockerfile: Dockerfile.test
+  BuildPlatformBinaries:
+    type: parallel
+    stage: build
+    steps:
+      build_linux:
+        title: Building Linux binary
+        image: ${{BuildTestbedImage}}
+        working_directory: /go/src/github.com/helm
+        commands:
+          - ln -s /codefresh/volume/chartmuseum chartmuseum
+          - cd chartmuseum
+          - make build_linux
+      build_mac:
+        title: Building Mac binary
+        image: ${{BuildTestbedImage}}
+        working_directory: /go/src/github.com/helm
+        commands:
+          - ln -s /codefresh/volume/chartmuseum chartmuseum
+          - cd chartmuseum
+          - make build_mac
+      build_windows:
+        title: Building Windows binary
+        image: ${{BuildTestbedImage}}
+        working_directory: /go/src/github.com/helm
+        commands:
+          - ln -s /codefresh/volume/chartmuseum chartmuseum
+          - cd chartmuseum
+          - make build_windows
+  RunTests:
+    type: parallel
+    stage: test
+    steps:
+      RunUnitTests:
+        title: Run unit tests
+        image: ${{BuildTestbedImage}}
+        commands:
+          - make test
+      RunAcceptanceTests:
+        title: Run acceptance tests
+        image: ${{BuildTestbedImage}}
+        commands:
+          - cp -r /codefresh/volume/chartmuseum/bin .
+          - make acceptance
