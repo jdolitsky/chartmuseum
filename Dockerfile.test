@@ -3,4 +3,4 @@ RUN mkdir -p /go/src/github.com/helm
 ADD chartmuseum /go/src/github.com/helm/chartmuseum
 WORKDIR /go/src/github.com/helm/chartmuseum
 RUN ls -la && \
-    make bootstrap setup-test-environment
+    make clean bootstrap setup-test-environment

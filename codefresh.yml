@@ -18,27 +18,24 @@ steps:
       build_linux:
         title: Building Linux binary
         image: ${{BuildTestbedImage}}
-        working_directory: /go/src/github.com/helm
         commands:
-          - ln -s /codefresh/volume/chartmuseum chartmuseum
-          - cd chartmuseum
           - make build_linux
+          - mkdir -p /codefresh/volume/chartmuseum/bin/linux/amd64
+          - mv bin/linux/amd64/chartmuseum /codefresh/volume/chartmuseum/bin/linux/amd64/
       build_mac:
         title: Building Mac binary
         image: ${{BuildTestbedImage}}
-        working_directory: /go/src/github.com/helm
         commands:
-          - ln -s /codefresh/volume/chartmuseum chartmuseum
-          - cd chartmuseum
           - make build_mac
+          - mkdir -p /codefresh/volume/chartmuseum/bin/linux/amd64
+          - mv bin/darwin/amd64/chartmuseum /codefresh/volume/chartmuseum/bin/darwin/amd64/
       build_windows:
         title: Building Windows binary
         image: ${{BuildTestbedImage}}
-        working_directory: /go/src/github.com/helm
         commands:
-          - ln -s /codefresh/volume/chartmuseum chartmuseum
-          - cd chartmuseum
           - make build_windows
+          - mkdir -p /codefresh/volume/chartmuseum/bin/linux/amd64
+          - mv bin/darwin/amd64/chartmuseum /codefresh/volume/chartmuseum/bin/darwin/amd64/
   RunTests:
     type: parallel
     stage: test
@@ -52,5 +49,4 @@ steps:
         title: Run acceptance tests
         image: ${{BuildTestbedImage}}
         commands:
-          - cp -r /codefresh/volume/chartmuseum/bin .
           - make acceptance
