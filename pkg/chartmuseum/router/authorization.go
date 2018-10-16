@@ -22,7 +22,6 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
-	"net/url"
 	"strings"
 
 	jwt "github.com/dgrijalva/jwt-go"
@@ -38,7 +37,7 @@ func generateBasicAuthHeader(username string, password string) string {
 	return basicAuthHeader
 }
 
-func (router *Router) authorizeRequest(request *http.Request) (bool, map[string]string) {
+func (router *Router) authorizeRequest(request *http.Request, repo string, act action) (bool, map[string]string) {
 	authorized := false
 	responseHeaders := map[string]string{}
 
@@ -53,9 +52,6 @@ func (router *Router) authorizeRequest(request *http.Request) (bool, map[string]
 			responseHeaders["WWW-Authenticate"] = "Basic realm=\"ChartMuseum\""
 		}
 	} else if router.BearerAuthHeader != "" {
-		// used to escape spaces in service name
-		queryString := url.PathEscape("service=" + router.AuthService)
-
 		if router.AnonymousGet && request.Method == "GET" {
 			authorized = true
 		} else {
@@ -65,16 +61,18 @@ func (router *Router) authorizeRequest(request *http.Request) (bool, map[string]
 				if isValid {
 					authorized = true
 				} else {
-					responseHeaders["WWW-Authenticate"] = "Bearer realm=\"" + router.AuthRealm + "?" + queryString + "\""
+					responseHeaders["WWW-Authenticate"] = fmt.Sprintf(
+						"Bearer realm=\"%s\",service=\"%s\",scope=\"artifact-repository:%s:%s\"", router.AuthRealm, router.AuthService, repo, act)
 				}
 			} else {
-				responseHeaders["WWW-Authenticate"] = "Bearer realm=\"" + router.AuthRealm + "?" + queryString + "\""
+				responseHeaders["WWW-Authenticate"] = fmt.Sprintf(
+					"Bearer realm=\"%s\",service=\"%s\",scope=\"artifact-repository:%s:%s\"", router.AuthRealm, router.AuthService, repo, act)
 			}
 		}
 	} else {
 		authorized = true
 	}
-	
+
 	return authorized, responseHeaders
 }
 

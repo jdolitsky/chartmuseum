@@ -113,8 +113,8 @@ func NewRouter(options RouterOptions) *Router {
 	// if BearerAuth is true, looks for required inputs.
 	// example input:
 	// --bearer-auth=true
-	// --auth-realm="https://127.0.0.1:5001/auth" 
-	// --auth-service="chartmuseum" 
+	// --auth-realm="https://127.0.0.1:5001/auth"
+	// --auth-service="chartmuseum"
 	// --auth-issuer="Acme auth server"
 	// --auth-cert-path="./certs/authorization-server-cert.pem"
 	if options.BearerAuth {
@@ -179,9 +179,7 @@ func (router *Router) masterHandler(c *gin.Context) {
 	c.Params = params
 
 	if isRepoAction(route.Action) {
-
-
-		authorized, responseHeaders := router.authorizeRequest(c.Request)
+		authorized, responseHeaders := router.authorizeRequest(c.Request, c.Param("repo"), route.Action)
 		for key, value := range responseHeaders {
 			c.Header(key, value)
 		}
