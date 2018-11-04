@@ -18,6 +18,7 @@ package router
 
 import (
 	"fmt"
+	"net/http"
 	"regexp"
 
 	cm_logger "github.com/helm/chartmuseum/pkg/chartmuseum/logger"
@@ -158,10 +159,14 @@ func (router *Router) Start(port int) {
 	router.Logger.Infow("Starting ChartMuseum",
 		"port", port,
 	)
+	httpServer := http.Server{
+		Addr:    fmt.Sprintf(":%d", port),
+		Handler: router,
+	}
 	if router.TlsCert != "" && router.TlsKey != "" {
-		router.Logger.Fatal(router.RunTLS(fmt.Sprintf(":%d", port), router.TlsCert, router.TlsKey))
+		router.Logger.Fatal(httpServer.ListenAndServeTLS(router.TlsCert, router.TlsKey))
 	} else {
-		router.Logger.Fatal(router.Run(fmt.Sprintf(":%d", port)))
+		router.Logger.Fatal(httpServer.ListenAndServe())
 	}
 }
 
