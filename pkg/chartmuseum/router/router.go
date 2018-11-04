@@ -56,6 +56,7 @@ type (
 		TlsCert       string
 		TlsKey        string
 		PathPrefix    string
+		LogHealth     bool
 		EnableMetrics bool
 		AnonymousGet  bool
 		Depth         int
@@ -90,7 +91,7 @@ func NewRouter(options RouterOptions) *Router {
 	gin.SetMode(gin.ReleaseMode)
 	engine := gin.New()
 	engine.Use(gin.Recovery())
-	engine.Use(requestWrapper(options.Logger))
+	engine.Use(requestWrapper(options.Logger, options.LogHealth))
 	engine.Use(limits.RequestSizeLimiter(int64(options.MaxUploadSize)))
 
 	if options.EnableMetrics {
