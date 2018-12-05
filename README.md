@@ -1,6 +1,6 @@
 # ChartMuseum
   
-<p align="center"><img align="center" src="logo2.png"></p>
+<p align="center"><img align="center" src="logo3.png"></p>
 
 [![CircleCI](https://circleci.com/gh/helm/chartmuseum.svg?style=svg)](https://circleci.com/gh/helm/chartmuseum)
 [![Go Report Card](https://goreportcard.com/badge/github.com/helm/chartmuseum)](https://goreportcard.com/report/github.com/helm/chartmuseum)
