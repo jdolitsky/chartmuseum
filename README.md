@@ -14,12 +14,12 @@ Works as a valid Helm Chart Repository, and also provides an API for uploading n
 
 Powered by some great Go technology:
 - [helm/helm](https://github.com/helm/helm) - for working with charts
-- [chartmuseum/auth](https://github.com/chartmuseum/auth) - for authorization
-- [chartmuseum/storage](https://github.com/chartmuseum/storage) - for multi-cloud storage
 - [gin-gonic/gin](https://github.com/gin-gonic/gin) - for HTTP routing
 - [urfave/cli](https://github.com/urfave/cli) - for command line option parsing
 - [spf13/viper](https://github.com/spf13/viper) - for configuration
 - [uber-go/zap](https://github.com/uber-go/zap) - for logging
+- [chartmuseum/auth](https://github.com/chartmuseum/auth) - for authorization
+- [chartmuseum/storage](https://github.com/chartmuseum/storage) - for multi-cloud storage
 
 ## API
 
