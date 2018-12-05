@@ -1,5 +1,5 @@
 # ChartMuseum
-<img align="right" src="https://github.com/helm/chartmuseum/raw/master/logo.png">
+<img align="right" src="logo2.png">
 
 [![CircleCI](https://circleci.com/gh/helm/chartmuseum.svg?style=svg)](https://circleci.com/gh/helm/chartmuseum)
 [![Go Report Card](https://goreportcard.com/badge/github.com/helm/chartmuseum)](https://goreportcard.com/report/github.com/helm/chartmuseum)
