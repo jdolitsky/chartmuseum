@@ -251,6 +251,18 @@ You may want basic auth to only be applied to operations that can change Charts,
 
 - `--auth-anonymous-get` - allow anonymous GET operations
 
+#### Bearer/Token Auth
+
+If all of the following options are provided, bearer auth will protect all routes:
+- `--bearer-auth` - enables bearer auth
+- `--auth-realm=<realm>` - authorization server url
+- `--auth-service=<service>` - authorization server service name
+- `--auth-cert-path=<path>` - path to authorization server public pem file
+
+Using options above, *ChartMuseum* is configured with a public key, and will accept JWT tokens signed by the associated private key, passed in the `Authorization` header.
+
+For more information, please see [chartmuseum/auth-server-example](https://github.com/chartmuseum/auth-server-example).
+
 #### HTTPS
 If both of the following options are provided, the server will listen and serve HTTPS:
 - `--tls-cert=<crt>` - path to tls certificate chain file
