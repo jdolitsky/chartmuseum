@@ -5,39 +5,23 @@
 [![GoDoc](https://godoc.org/github.com/helm/chartmuseum?status.svg)](https://godoc.org/github.com/helm/chartmuseum)
 <sub>**_"Preserve your precious artifacts... in the cloud!"_**<sub>
   
-<p align="center"><img align="center" src="logo2.png"></p><br/>
+<p align="center"><img align="center" src="logo2.png"></p>
 
 *ChartMuseum* is an open-source **[Helm Chart Repository](https://github.com/kubernetes/helm/blob/master/docs/chart_repository.md)** written in Go (Golang), with support for cloud storage backends, including [Google Cloud Storage](https://cloud.google.com/storage/), [Amazon S3](https://aws.amazon.com/s3/), [Microsoft Azure Blob Storage](https://azure.microsoft.com/en-us/services/storage/blobs/), [Alibaba Cloud OSS Storage](https://www.alibabacloud.com/product/oss), [Openstack Object Storage](https://developer.openstack.org/api-ref/object-store/), and [Oracle Cloud Infrastructure Object Storage](https://cloud.oracle.com/storage).
 
 Works as a valid Helm Chart Repository, and also provides an API for uploading new chart packages to storage etc.
 
-<img width="60" align="right" src="https://github.com/golang-samples/gopher-vector/raw/master/gopher-side_color.png">
-<img width="20" align="right" src="https://github.com/golang-samples/gopher-vector/raw/master/gopher-side_color.png">
+<img width="100" align="right" src="https://github.com/golang-samples/gopher-vector/raw/master/gopher-side_color.png">
+<img width="40" align="right" src="https://github.com/golang-samples/gopher-vector/raw/master/gopher-side_color.png">
 
 Powered by some great Go technology:
-- [Kubernetes Helm](https://github.com/kubernetes/helm) - for working with charts, generating repository index
-- [Gin Web Framework](https://github.com/gin-gonic/gin) - for HTTP routing
-- [cli](https://github.com/urfave/cli) - for command line option parsing
-- [zap](https://github.com/uber-go/zap) - for logging
-
-## Things that have been said in Helm land
->"Finally!!"
-
->"ChartMuseum is awesome"
-
->"This is awesome!"
-
->"Oh yes!!!! I’ve been waiting for this for so long. Makes life much easier, especially for the index.yaml creation!"
-
->"I was thinking about writing one of these up myself. This is perfect! thanks!"
-
->"I am jumping for joy over ChartMuseum, a full-fledged Helm repository server with upload!"
-
->"This is really cool ... We currently have a process that generates the index file and then uploads, so this is nice"
-
->"Really a good idea ... really really great, thanks again. I can use nginx to hold the repos and the museum to add/delete the chart. That's a whole life cycle management of chart with the current helm"
-
->"thanks for building the museum!"
+- [helm/helm](https://github.com/helm/helm) - for working with charts
+- [chartmuseum/auth](https://github.com/chartmuseum/auth) - for authorization
+- [chartmuseum/storage](https://github.com/chartmuseum/storage) - for multi-cloud storage
+- [gin-gonic/gin](https://github.com/gin-gonic/gin) - for HTTP routing
+- [urfave/cli](https://github.com/urfave/cli) - for command line option parsing
+- [spf13/viper](https://github.com/spf13/viper) - for configuration
+- [uber-go/zap](https://github.com/uber-go/zap) - for logging
 
 ## API
 ### Helm Chart Repository
