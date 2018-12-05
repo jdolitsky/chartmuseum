@@ -1,5 +1,3 @@
-# ChartMuseum
-  
 <p align="center"><img align="center" src="logo3.png"></p>
 
 [![CircleCI](https://circleci.com/gh/helm/chartmuseum.svg?style=svg)](https://circleci.com/gh/helm/chartmuseum)
