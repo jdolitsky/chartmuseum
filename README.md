@@ -19,7 +19,7 @@ Powered by some great Go technology:
 - [urfave/cli](https://github.com/urfave/cli) - for command line option parsing
 - [spf13/viper](https://github.com/spf13/viper) - for configuration
 - [uber-go/zap](https://github.com/uber-go/zap) - for logging
-- [chartmuseum/auth](https://github.com/chartmuseum/auth) - for authorization
+- [chartmuseum/auth](https://github.com/chartmuseum/auth) - for auth
 - [chartmuseum/storage](https://github.com/chartmuseum/storage) - for multi-cloud storage
 
 ## API
