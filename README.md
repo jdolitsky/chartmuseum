@@ -11,8 +11,7 @@
 
 Works as a valid Helm Chart Repository, and also provides an API for uploading new chart packages to storage etc.
 
-<img width="100" align="right" src="https://github.com/golang-samples/gopher-vector/raw/master/gopher-side_color.png">
-<img width="40" align="right" src="https://github.com/golang-samples/gopher-vector/raw/master/gopher-side_color.png">
+<img width="200" align="right" src="https://github.com/golang-samples/gopher-vector/raw/master/gopher-side_color.png">
 
 Powered by some great Go technology:
 - [helm/helm](https://github.com/helm/helm) - for working with charts
@@ -24,6 +23,9 @@ Powered by some great Go technology:
 - [uber-go/zap](https://github.com/uber-go/zap) - for logging
 
 ## API
+
+<img width="40" align="right" src="https://github.com/golang-samples/gopher-vector/raw/master/gopher-side_color.png">
+
 ### Helm Chart Repository
 - `GET /index.yaml` - retrieved when you run `helm repo add chartmuseum http://localhost:8080/`
 - `GET /charts/mychart-0.1.0.tgz` - retrieved when you run `helm install chartmuseum/mychart`
