@@ -293,11 +293,21 @@ The contents of index.yaml will be printed to stdout and the program will exit. 
 ### Docker Image
 Available via [Docker Hub](https://hub.docker.com/r/chartmuseum/chartmuseum/).
 
+Example usage (local storage):
+```bash
+docker run --rm -it \
+  -p 8080:8080 \
+  -e DEBUG=1 \
+  -e STORAGE=local \
+  -e STORAGE_LOCAL_ROOTDIR=/charts \
+  -v $(pwd)/charts:/charts \
+  chartmuseum/chartmuseum:latest
+```
+
 Example usage (S3):
 ```bash
 docker run --rm -it \
   -p 8080:8080 \
-  -e PORT=8080 \
   -e DEBUG=1 \
   -e STORAGE="amazon" \
   -e STORAGE_AMAZON_BUCKET="my-s3-bucket" \
