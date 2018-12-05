@@ -10,7 +10,7 @@
 
 Works as a valid Helm Chart Repository, and also provides an API for uploading new chart packages to storage etc.
 
-<img width="200" align="right" src="https://github.com/golang-samples/gopher-vector/raw/master/gopher-side_color.png">
+<img width="150" align="right" src="https://github.com/golang-samples/gopher-vector/raw/master/gopher-side_color.png">
 
 Powered by some great Go technology:
 - [helm/helm](https://github.com/helm/helm) - for working with charts
@@ -415,6 +415,21 @@ You can then use *ChartMuseum* to serve up an internal mirror:
 scripts/mirror_k8s_repos.sh
 chartmuseum --debug --port=8080 --storage="local" --storage-local-rootdir="./mirror"
  ```
+ 
+## Original Logo
+
+<sub>**_"Preserve your precious artifacts... in the cloud!"_**<sub>
+
+![](./logo.png)
+  
+## Subprojects
+
+- [chartmuseum/helm-push](https://github.com/chartmuseum/helm-push) - Helm plugin to push chart package to ChartMuseum
+- [chartmuseum/storage](https://github.com/chartmuseum/storage) - Go library providing common interface for working across multiple cloud storage backends
+- [chartmuseum/auth](https://github.com/chartmuseum/auth) - Go library for generating ChartMuseum JWT Tokens, authorizing HTTP requests, etc.
+- [chartmuseum/auth-server-example](https://github.com/chartmuseum/auth-server-example) - Example server providing JWT tokens for ChartMuseum auth
+- [chartmuseum/www](https://github.com/chartmuseum/www) - chartmuseum.com static site source code
+- [chartmuseum/ui](https://github.com/chartmuseum/ui) - ChartMuseum frontend UI
 
 ## Community
 You can reach the *ChartMuseum* community and developers in the [Kubernetes Slack](https://slack.k8s.io) **#chartmuseum** channel.
