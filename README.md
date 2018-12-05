@@ -6,7 +6,7 @@
 
 *ChartMuseum* is an open-source **[Helm Chart Repository](https://github.com/kubernetes/helm/blob/master/docs/chart_repository.md)** server written in Go (Golang), with support for cloud storage backends, including [Google Cloud Storage](https://cloud.google.com/storage/), [Amazon S3](https://aws.amazon.com/s3/), [Microsoft Azure Blob Storage](https://azure.microsoft.com/en-us/services/storage/blobs/), [Alibaba Cloud OSS Storage](https://www.alibabacloud.com/product/oss), [Openstack Object Storage](https://developer.openstack.org/api-ref/object-store/), and [Oracle Cloud Infrastructure Object Storage](https://cloud.oracle.com/storage).
 
-Works as a valid Helm Chart Repository, and also provides an API for uploading new chart packages to storage etc.
+Works as a valid Helm Chart Repository, and also provides an API for uploading charts.
 
 <img width="120" align="right" src="https://github.com/golang-samples/gopher-vector/raw/master/gopher-side_color.png">
 <img width="40" align="right" src="https://github.com/golang-samples/gopher-vector/raw/master/gopher-side_color.png">
