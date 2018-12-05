@@ -1,4 +1,4 @@
-<p align="center"><img align="center" src="logo4.png"></p>
+<p align="center"><img align="center" src="logo4.png"></p><br/>
 
 [![CircleCI](https://circleci.com/gh/helm/chartmuseum.svg?style=svg)](https://circleci.com/gh/helm/chartmuseum)
 [![Go Report Card](https://goreportcard.com/badge/github.com/helm/chartmuseum)](https://goreportcard.com/report/github.com/helm/chartmuseum)
@@ -8,8 +8,8 @@
 
 Works as a valid Helm Chart Repository, and also provides an API for uploading new chart packages to storage etc.
 
-<img width="150" align="right" src="https://github.com/golang-samples/gopher-vector/raw/master/gopher-side_color.png">
-<img width="80" align="right" src="https://github.com/golang-samples/gopher-vector/raw/master/gopher-side_color.png">
+<img width="120" align="right" src="https://github.com/golang-samples/gopher-vector/raw/master/gopher-side_color.png">
+<img width="40" align="right" src="https://github.com/golang-samples/gopher-vector/raw/master/gopher-side_color.png">
 
 Powered by some great Go technology:
 - [helm/helm](https://github.com/helm/helm) - for working with charts
@@ -17,8 +17,6 @@ Powered by some great Go technology:
 - [urfave/cli](https://github.com/urfave/cli) - for command line option parsing
 - [spf13/viper](https://github.com/spf13/viper) - for configuration
 - [uber-go/zap](https://github.com/uber-go/zap) - for logging
-- [chartmuseum/auth](https://github.com/chartmuseum/auth) - for authorization
-- [chartmuseum/storage](https://github.com/chartmuseum/storage) - for multi-cloud storage
 
 ## API
 
