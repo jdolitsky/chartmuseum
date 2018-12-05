@@ -90,7 +90,14 @@ helm install chartmuseum/mychart
 ## How to Run
 ### CLI
 #### Installation
-Install the binary:
+Install binary using [gofish](https://gofi.sh/):
+```
+gofish install chartmuseum
+==> Installing chartmuseum...
+🐠  chartmuseum 0.7.1: installed in 95.431145ms
+```
+
+or manually:
 ```bash
 # on Linux
 curl -LO https://s3.amazonaws.com/chartmuseum/release/latest/bin/linux/amd64/chartmuseum
