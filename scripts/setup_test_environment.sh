@@ -19,13 +19,19 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 cd $DIR/../
 
 export PATH="$PWD/testbin:$PATH"
-export HELM_HOME="$PWD/.helm"
+
+if [ -x "$(command -v busybox)" ]; then
+  export IS_BUSYBOX=1
+fi
 
 main() {
     if [[ $TEST_CLOUD_STORAGE == 1 ]]; then
         check_storage_env_vars
     fi
-    install_helm
+    if [ "$IS_BUSYBOX" != "1" ]; then
+        export HELM_HOME="$PWD/.helm"
+        install_helm
+    fi
     package_test_charts
 }
 

@@ -17,13 +17,16 @@ fi
 
 export PATH="$PWD/testbin:$PWD/bin/$PLATFORM/amd64:$PATH"
 
-export HELM_HOME="$PWD/.helm"
-helm init --client-only
-
-if [ ! -d .venv/ ]; then
-    virtualenv -p $(which python3) .venv/
-    .venv/bin/python .venv/bin/pip install $PY_REQUIRES
-fi
-
 mkdir -p .robot/
-.venv/bin/robot --outputdir=.robot/ acceptance_tests/
+
+if [ "$IS_BUSYBOX" != "1" ]; then
+    export HELM_HOME="$PWD/.helm"
+    helm init --client-only
+    if [ ! -d .venv/ ]; then
+        virtualenv -p $(which python3) .venv/
+        .venv/bin/python .venv/bin/pip install $PY_REQUIRES
+    fi
+    .venv/bin/robot --outputdir=.robot/ acceptance_tests/
+else
+    robot --outputdir=.robot/ acceptance_tests/
+fi
