@@ -90,7 +90,7 @@ helm install chartmuseum/mychart
 ## How to Run
 ### CLI
 #### Installation
-Install binary using [gofish](https://gofi.sh/):
+Install binary using [GoFish](https://gofi.sh/):
 ```
 gofish install chartmuseum
 ==> Installing chartmuseum...
