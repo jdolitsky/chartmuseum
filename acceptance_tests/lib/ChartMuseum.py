@@ -18,7 +18,7 @@ class ChartMuseum(common.CommandRunner):
     def start_chartmuseum(self, storage):
         self.stop_chartmuseum()
         os.chdir(self.rootdir)
-        cmd = 'chartmuseum --debug --port=%d --storage="%s" ' % (common.PORT, storage)
+        cmd = 'KILLME=1 chartmuseum --debug --port=%d --storage="%s" ' % (common.PORT, storage)
         if storage == 'local':
             shutil.rmtree(common.STORAGE_DIR, ignore_errors=True)
             cmd += '--storage-local-rootdir=%s >> %s 2>&1' % (common.STORAGE_DIR, common.LOGFILE)
@@ -56,7 +56,10 @@ class ChartMuseum(common.CommandRunner):
             seconds_waited += 1
 
     def stop_chartmuseum(self):
-        self.run_command('pkill -9 chartmuseum')
+        if os.getenv('IS_BUSYBOX'):
+            self.run_command('pkill -9 KILLME')
+        else:
+            self.run_command('pkill -9 chartmuseum')
         shutil.rmtree(common.STORAGE_DIR, ignore_errors=True)
 
     def remove_chartmuseum_logs(self):

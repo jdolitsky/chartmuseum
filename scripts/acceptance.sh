@@ -11,6 +11,10 @@ else
     PLATFORM="linux"
 fi
 
+if [ -x "$(command -v busybox)" ]; then
+  export IS_BUSYBOX=1
+fi
+
 export PATH="$PWD/testbin:$PWD/bin/$PLATFORM/amd64:$PATH"
 
 export HELM_HOME="$PWD/.helm"
