@@ -77,12 +77,12 @@ class ChartMuseum(common.CommandRunner):
             os.chdir(d)
             tgzs = glob.glob('*.tgz')
             for tgz in tgzs:
-                print('Uploading test chart package "%s"' % tgz)
-                with open(tgz) as f:
+                print(('Uploading test chart package "%s"' % tgz))
+                with open(tgz, 'rb') as f:
                     response = requests.post(url=charts_endpoint, data=f.read())
-                    print('POST %s' % charts_endpoint)
-                    print('HTTP STATUS: %s' % response.status_code)
-                    print('HTTP CONTENT: %s' % response.content)
+                    print(('POST %s' % charts_endpoint))
+                    print(('HTTP STATUS: %s' % response.status_code))
+                    print(('HTTP CONTENT: %s' % response.content))
                     self.http_status_code_should_be(201, response.status_code)
             os.chdir('../')
 
@@ -96,12 +96,12 @@ class ChartMuseum(common.CommandRunner):
             os.chdir(d)
             provs = glob.glob('*.tgz.prov')
             for prov in provs:
-                print('Uploading provenance file "%s"' % prov)
+                print(('Uploading provenance file "%s"' % prov))
                 with open(prov) as f:
                     response = requests.post(url=prov_endpoint, data=f.read())
-                    print('POST %s' % prov_endpoint)
-                    print('HTTP STATUS: %s' % response.status_code)
-                    print('HTTP CONTENT: %s' % response.content)
+                    print(('POST %s' % prov_endpoint))
+                    print(('HTTP STATUS: %s' % response.status_code))
+                    print(('HTTP CONTENT: %s' % response.content))
                     self.http_status_code_should_be(201, response.status_code)
             os.chdir('../')
 
@@ -118,11 +118,11 @@ class ChartMuseum(common.CommandRunner):
                 tmp = tgz[:-4].rsplit('-', 1)
                 name = tmp[0]
                 version = tmp[1]
-                print('Delete test chart "%s-%s"' % (name, version))
+                print(('Delete test chart "%s-%s"' % (name, version)))
                 with open(tgz) as f:
                     epoint = '%s/%s/%s' % (endpoint, name, version)
                     response = requests.delete(url=epoint)
-                    print('HTTP STATUS: %s' % response.status_code)
-                    print('HTTP CONTENT: %s' % response.content)
+                    print(('HTTP STATUS: %s' % response.status_code))
+                    print(('HTTP CONTENT: %s' % response.content))
                     self.http_status_code_should_be(200, response.status_code)
             os.chdir('../')
