@@ -473,7 +473,7 @@ chartmuseum --debug --port=8080 --storage="local" --storage-local-rootdir="./mir
   
 ## Subprojects
 
-The following subprojects are maintained by the *ChartMuseum* project:
+The following subprojects are maintained by *ChartMuseum*:
 
 - [chartmuseum/helm-push](https://github.com/chartmuseum/helm-push) - Helm plugin to push chart package to ChartMuseum
 - [chartmuseum/storage](https://github.com/chartmuseum/storage) - Go library providing common interface for working across multiple cloud storage backends
