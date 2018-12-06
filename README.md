@@ -6,7 +6,7 @@
 
 <p align="center"><img align="center" src="logo2.png"></p><br/>
 
-*ChartMuseum* is an open-source **[Helm Chart Repository](https://github.com/kubernetes/helm/blob/master/docs/chart_repository.md)** server written in Go (Golang), with support for cloud storage backends, including [Google Cloud Storage](https://cloud.google.com/storage/), [Amazon S3](https://aws.amazon.com/s3/), [Microsoft Azure Blob Storage](https://azure.microsoft.com/en-us/services/storage/blobs/), [Alibaba Cloud OSS Storage](https://www.alibabacloud.com/product/oss), [Openstack Object Storage](https://developer.openstack.org/api-ref/object-store/), and [Oracle Cloud Infrastructure Object Storage](https://cloud.oracle.com/storage).
+*ChartMuseum* is an open-source **[Helm Chart Repository](https://github.com/helm/helm/blob/master/docs/chart_repository.md)** server written in Go (Golang), with support for cloud storage backends, including [Google Cloud Storage](https://cloud.google.com/storage/), [Amazon S3](https://aws.amazon.com/s3/), [Microsoft Azure Blob Storage](https://azure.microsoft.com/en-us/services/storage/blobs/), [Alibaba Cloud OSS Storage](https://www.alibabacloud.com/product/oss), [Openstack Object Storage](https://developer.openstack.org/api-ref/object-store/), and [Oracle Cloud Infrastructure Object Storage](https://cloud.oracle.com/storage).
 
 Works as a valid Helm Chart Repository, and also provides an API for uploading charts.
 
@@ -55,7 +55,7 @@ Upload `mychart-0.1.0.tgz`:
 curl --data-binary "@mychart-0.1.0.tgz" http://localhost:8080/api/charts
 ```
 
-If you've signed your package and generated a [provenance file](https://github.com/kubernetes/helm/blob/master/docs/provenance.md), upload it with:
+If you've signed your package and generated a [provenance file](https://github.com/helm/helm/blob/master/docs/provenance.md), upload it with:
 ```bash
 curl --data-binary "@mychart-0.1.0.tgz.prov" http://localhost:8080/api/prov
 ```
@@ -346,9 +346,9 @@ docker run --rm -it \
 ```
 
 ### Helm Chart
-There is a [Helm chart for *ChartMuseum*](https://github.com/kubernetes/charts/tree/master/stable/chartmuseum) itself which can be found in the official Kubernetes Charts repository.
+There is a [Helm chart for *ChartMuseum*](https://github.com/helm/charts/tree/master/stable/chartmuseum) itself which can be found in the official Helm charts repository.
 
-You can also view it on [Kubeapps Hub](https://hub.kubeapps.com/charts/stable/chartmuseum).
+You can also view it on [Helm Hub](https://hub.helm.sh/charts/stable/chartmuseum).
 
 To install:
 ```bash
@@ -356,7 +356,7 @@ helm repo add stable https://kubernetes-charts.storage.googleapis.com
 helm install stable/chartmuseum
 ```
 
-If interested in making changes, please submit a PR to kubernetes/charts. Before doing any work, please check for any [currently open pull requests](https://github.com/kubernetes/charts/pulls?q=is%3Apr+is%3Aopen+chartmuseum). Thanks!
+If interested in making changes, please submit a PR to [helm/charts](https://github.com/helm/charts). Before doing any work, please check for any [currently open pull requests](https://github.com/helm/charts/pulls?q=is%3Apr+is%3Aopen+chartmuseum). Thanks!
 
 ## Multitenancy
 Multitenancy is supported with the `--depth` flag.
