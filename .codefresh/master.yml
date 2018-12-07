@@ -135,7 +135,7 @@ steps:
         - success
       condition:
         all:
-          VersionReleased: '"${{VERSION_RELEASED}" == "false"'
+          VersionReleased: '"${{VERSION_RELEASED}}" == "false"'
 
   PushLatestDockerImage:
     stage: release
