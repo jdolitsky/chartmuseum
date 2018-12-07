@@ -108,7 +108,7 @@ steps:
     image: *testbed
     commands:
     - *link
-    - echo make release-latest
+    - make release-latest
     when: &tests_pass
       steps:
       - name: BuildDockerImage
