@@ -46,10 +46,10 @@ clean:
 .PHONY: setup-test-environment
 setup-test-environment:
 ifndef HAS_PIP
-	@sudo apt-get update && sudo apt-get install -y python-pip
+	@apt-get update && apt-get install -y python-pip
 endif
 ifndef HAS_VENV
-	@sudo pip install virtualenv
+	@pip install virtualenv
 endif
 	@./scripts/setup_test_environment.sh
 
@@ -64,7 +64,7 @@ testcloud: test
 .PHONY: startloadtest
 startloadtest:
 ifndef HAS_PIPENV
-	@sudo pip install pipenv
+	@pip install pipenv
 endif
 	@cd loadtesting && pipenv install
 	@cd loadtesting && pipenv run locust --host $(CM_LOADTESTING_HOST)
@@ -94,13 +94,13 @@ ifndef HAS_GOVIZ
 	@go get -u github.com/RobotsAndPencils/goviz
 endif
 ifndef HAS_DOT
-	@sudo apt-get update && sudo apt-get install -y graphviz
+	@apt-get update && apt-get install -y graphviz
 endif
 	@goviz -i github.com/helm/chartmuseum/cmd/chartmuseum -l | dot -Tpng -o goviz.png
 
 .PHONY: release
 release:
 ifndef HAS_AWS
-	@sudo pip install awscli
+	@pip install awscli
 endif
 	@scripts/release.sh $(VERSION)
