@@ -1,7 +1,7 @@
 #!/bin/bash -ex
 
 VERSION="$1"
-DOCKER_REPO="chartmuseum/chartmuseum"
+
 REQUIRED_RELEASE_ENV_VARS=(
     "RELEASE_AMAZON_BUCKET"
     "RELEASE_AMAZON_REGION"
@@ -15,7 +15,6 @@ COMMIT="$(git rev-parse HEAD)"
 main() {
     check_args
     check_env_vars
-    docker_build
     release_latest
     release_stable
 }
@@ -41,17 +40,12 @@ check_env_vars() {
     set -x
 }
 
-docker_build() {
-    docker build -t $DOCKER_REPO:latest .
-}
-
 release_latest() {
     echo "$COMMIT" > .latest.txt
     aws s3 --region=$RELEASE_AMAZON_REGION cp --recursive bin/ \
         s3://$RELEASE_AMAZON_BUCKET/release/latest/bin/
     aws s3 --region=$RELEASE_AMAZON_REGION cp .latest.txt \
         s3://$RELEASE_AMAZON_BUCKET/release/latest.txt
-    docker push $DOCKER_REPO:latest
 }
 
 release_stable() {
@@ -68,8 +62,6 @@ release_stable() {
             s3://$RELEASE_AMAZON_BUCKET/release/v${VERSION}/bin/
         aws s3 --region=$RELEASE_AMAZON_REGION cp .stable.txt \
             s3://$RELEASE_AMAZON_BUCKET/release/stable.txt
-        docker tag $DOCKER_REPO:latest $DOCKER_REPO:v${VERSION}
-        docker push $DOCKER_REPO:v${VERSION}
     fi
 }
 

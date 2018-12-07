@@ -9,22 +9,22 @@ bootstrap:
 	@dep ensure -v -vendor-only
 
 .PHONY: build
-build: build_linux build_mac build_windows
+build: build-linux build-mac build-windows
 
-build_windows: export GOARCH=amd64
-build_windows:
+build-windows: export GOARCH=amd64
+build-windows:
 	@GOOS=windows go build -v --ldflags="-w -X main.Version=$(VERSION) -X main.Revision=$(REVISION)" \
 		-o bin/windows/amd64/chartmuseum cmd/chartmuseum/main.go  # windows
 
-build_linux: export GOARCH=amd64
-build_linux: export CGO_ENABLED=0
-build_linux:
+build-linux: export GOARCH=amd64
+build-linux: export CGO_ENABLED=0
+build-linux:
 	@GOOS=linux go build -v --ldflags="-w -X main.Version=$(VERSION) -X main.Revision=$(REVISION)" \
 		-o bin/linux/amd64/chartmuseum cmd/chartmuseum/main.go  # linux
 
-build_mac: export GOARCH=amd64
-build_mac: export CGO_ENABLED=0
-build_mac:
+build-mac: export GOARCH=amd64
+build-mac: export CGO_ENABLED=0
+build-mac:
 	@GOOS=darwin go build -v --ldflags="-w -X main.Version=$(VERSION) -X main.Revision=$(REVISION)" \
 		-o bin/darwin/amd64/chartmuseum cmd/chartmuseum/main.go # mac osx
 
@@ -39,10 +39,6 @@ setup-test-environment:
 .PHONY: test
 test: setup-test-environment
 	@./scripts/test.sh
-
-.PHONY: testcloud
-testcloud: export TEST_CLOUD_STORAGE=1
-testcloud: test
 
 .PHONY: startloadtest
 startloadtest:
@@ -76,3 +72,7 @@ goviz:
 .PHONY: release
 release:
 	@scripts/release.sh $(VERSION)
+
+.PHONY: version-released
+version-released:
+	@scripts/version_released.sh $(VERSION)

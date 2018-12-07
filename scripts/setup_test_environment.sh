@@ -1,19 +1,6 @@
 #!/bin/bash -ex
 
 HELM_VERSION="2.11.0"
-REQUIRED_TEST_STORAGE_ENV_VARS=(
-    "TEST_STORAGE_AMAZON_BUCKET"
-    "TEST_STORAGE_AMAZON_REGION"
-    "TEST_STORAGE_GOOGLE_BUCKET"
-    "TEST_STORAGE_MICROSOFT_CONTAINER"
-    "TEST_STORAGE_ALIBABA_BUCKET"
-    "TEST_STORAGE_ALIBABA_ENDPOINT"
-    "TEST_STORAGE_OPENSTACK_CONTAINER"
-    "TEST_STORAGE_OPENSTACK_REGION"
-    "TEST_STORAGE_ORACLE_BUCKET"
-    "TEST_STORAGE_ORACLE_REGION"
-    "TEST_STORAGE_ORACLE_COMPARTMENTID"
-)
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 cd $DIR/../
@@ -25,30 +12,11 @@ if [ -x "$(command -v busybox)" ]; then
 fi
 
 main() {
-    if [[ $TEST_CLOUD_STORAGE == 1 ]]; then
-        check_storage_env_vars
-    fi
     if [ "$IS_BUSYBOX" != "1" ]; then
         export HELM_HOME="$PWD/.helm"
         install_helm
     fi
     package_test_charts
-}
-
-check_storage_env_vars() {
-    set +x
-    SOME_ENV_VARS_PRESENT="0"
-    for VAR in ${REQUIRED_TEST_STORAGE_ENV_VARS[@]}; do
-        if [ "${!VAR}" != "" ]; then
-            echo "Detected one required test env var: $VAR"
-            SOME_ENV_VARS_PRESENT="1"
-        fi
-    done
-    if [ "$SOME_ENV_VARS_PRESENT" == "0" ]; then
-        echo "At least one or all of ${REQUIRED_TEST_STORAGE_ENV_VARS[@]} should be present"
-        exit 1
-    fi
-    set -x
 }
 
 install_helm() {
