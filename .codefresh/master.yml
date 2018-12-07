@@ -89,7 +89,7 @@ steps:
     commands:
     # Combine reports, add link to coverage report at the bottom of acceptance test report
     - mkdir -p .report && cp .robot/* .report/ && cp .cover/coverage.html .report/
-    - "sed -i 's/<\/body>/<h1><a href=\"coverage.html\">View code coverage<\/a><\/h1><\/body>/' .report/report.html"
+    - sed -i 's/<\/body>/<h1><a href=\"coverage.html\">View code coverage<\/a><\/h1><\/body>/' .report/report.html
     - REPORT_DIR=.report REPORT_INDEX_FILE=report.html node /app/index.js
     - bash -c 'if [[ ! -f UNIT_TEST_SUCCESS || ! -f ACCEPTANCE_TEST_SUCCESS ]]; then exit 1; fi'
     when:
