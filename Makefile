@@ -76,3 +76,7 @@ release:
 .PHONY: version-released
 version-released:
 	@scripts/version_released.sh $(VERSION)
+
+.PHONY: combine-reports
+combine-reports:
+	@scripts/combine_reports.sh
