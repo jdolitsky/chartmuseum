@@ -2,6 +2,28 @@
 
 PY_REQUIRES="requests==2.20.1 robotframework==3.0.4"
 
+REQUIRED_TEST_STORAGE_ENV_VARS=(
+    "TEST_STORAGE_AMAZON_BUCKET"
+    "TEST_STORAGE_AMAZON_REGION"
+    "TEST_STORAGE_GOOGLE_BUCKET"
+    "TEST_STORAGE_MICROSOFT_CONTAINER"
+    "TEST_STORAGE_ALIBABA_BUCKET"
+    "TEST_STORAGE_ALIBABA_ENDPOINT"
+    "TEST_STORAGE_OPENSTACK_CONTAINER"
+    "TEST_STORAGE_OPENSTACK_REGION"
+    "TEST_STORAGE_ORACLE_BUCKET"
+    "TEST_STORAGE_ORACLE_REGION"
+    "TEST_STORAGE_ORACLE_COMPARTMENTID"
+)
+
+set +x
+for VAR in ${REQUIRED_TEST_STORAGE_ENV_VARS[@]}; do
+    if [ "${!VAR}" != "" ]; then
+        echo "Detected one required test env var: $VAR"
+    fi
+done
+set -x
+
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 cd $DIR/../
 
