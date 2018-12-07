@@ -15,8 +15,12 @@ COMMIT="$(git rev-parse HEAD)"
 main() {
     check_args
     check_env_vars
-    release_latest
-    release_stable
+
+    if [ "$VERSION" == "latest" ]; then
+        release_latest
+    else
+        release_stable
+    fi
 }
 
 check_args() {
@@ -49,20 +53,11 @@ release_latest() {
 }
 
 release_stable() {
-    set +e
-    aws s3 --region=$RELEASE_AMAZON_REGION ls s3://$RELEASE_AMAZON_BUCKET/release/ \
-        | grep -F "v${VERSION}/"
-    local rc="$?"
-    set -e
-    if [ "$rc" == "0" ]; then
-        echo "v${VERSION} has already been released. Skipping."
-    else
-        echo "v${VERSION}" > .stable.txt
-        aws s3 --region=$RELEASE_AMAZON_REGION cp --recursive bin/ \
-            s3://$RELEASE_AMAZON_BUCKET/release/v${VERSION}/bin/
-        aws s3 --region=$RELEASE_AMAZON_REGION cp .stable.txt \
-            s3://$RELEASE_AMAZON_BUCKET/release/stable.txt
-    fi
+    echo "v${VERSION}" > .stable.txt
+    aws s3 --region=$RELEASE_AMAZON_REGION cp --recursive bin/ \
+        s3://$RELEASE_AMAZON_BUCKET/release/v${VERSION}/bin/
+    aws s3 --region=$RELEASE_AMAZON_REGION cp .stable.txt \
+        s3://$RELEASE_AMAZON_BUCKET/release/stable.txt
 }
 
 main

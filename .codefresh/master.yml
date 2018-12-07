@@ -14,6 +14,7 @@ steps:
     image: &testbed chartmuseum/testbed:latest
     commands:
     - make clean
+    - cf_export VERSION="$(make get-version)"
     - cf_export VERSION_RELEASED="$(make version-released && echo true || echo false)"
     - &link mkdir -p /go/src/github.com/helm && cd /go/src/github.com/helm && ln -s /codefresh/volume/chartmuseum chartmuseum && cd chartmuseum
     when:
@@ -117,13 +118,13 @@ steps:
         on:
         - success
 
-  UploadTaggedPlatformBinaries:
+  UploadStablePlatformBinaries:
     stage: release
-    title: Upload tagged platform binaries
+    title: Upload stable platform binaries
     image: *testbed
     commands:
     - *link
-    - echo make release-tagged
+    - make release-stable
     when: &version_unreleased
       steps:
       - name: BuildDockerImage
@@ -141,17 +142,17 @@ steps:
     title: Push latest Docker image
     type: push
     candidate: '${{BuildDockerImage}}'
-    image_name: chartmuseum/chartmuseum
-    tag: edge
+    image_name: jdolitsky/chartmuseum
+    tag: latest
     registry: dockerhub
     when: *tests_pass
 
-  PushTaggedDockerImage:
+  PushStableDockerImage:
     stage: release
-    title: Push tagged Docker image
+    title: Push stable Docker image
     type: push
     candidate: '${{BuildDockerImage}}'
-    image_name: chartmuseum/chartmuseum
-    tag: edge
+    image_name: jdolitsky/chartmuseum
+    tag: '${{VERSION}}'
     registry: dockerhub
     when: *version_unreleased

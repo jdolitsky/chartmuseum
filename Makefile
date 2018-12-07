@@ -69,10 +69,18 @@ goviz:
 	#@go get -u github.com/RobotsAndPencils/goviz
 	@goviz -i github.com/helm/chartmuseum/cmd/chartmuseum -l | dot -Tpng -o goviz.png
 
-.PHONY: release
-release:
+.PHONY: release-latest
+release-latest:
+	@scripts/release.sh latest
+
+.PHONY: release-stable
+release-stable:
 	@scripts/release.sh $(VERSION)
 
 .PHONY: version-released
 version-released:
 	@scripts/version_released.sh $(VERSION)
+
+.PHONY: get-version
+get-version:
+	@echo $(VERSION)
